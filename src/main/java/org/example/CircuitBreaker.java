@@ -70,7 +70,7 @@ public class CircuitBreaker {
                     return fallbackResponse;
                 }
 
-                if (halfOpenSuccesses.getAndIncrement() == halfOpenRequestLimit - 1 && state.compareAndSet(State.HALF_OPEN, State.CLOSED)) {
+                if (halfOpenSuccesses.incrementAndGet() >= halfOpenRequestLimit && state.compareAndSet(State.HALF_OPEN, State.CLOSED)) {
                     halfOpenSuccesses.set(0);
                     halfOpenRequestCount.set(0);
                 }
