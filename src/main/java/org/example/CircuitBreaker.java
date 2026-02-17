@@ -59,7 +59,7 @@ public class CircuitBreaker {
     }
 
     private ResponseEntity<Response> sendHalfOpenRequest(Supplier<ResponseEntity<Response>> action) {
-        if (halfOpenRequestCount.getAndIncrement() >= halfOpenRequestLimit - 1) {
+        if (halfOpenRequestCount.incrementAndGet() > halfOpenRequestLimit) {
             return fallbackResponse;
         } else {
             try {
